@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abraham Abredu — Business Intelligence Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A1628;
+    --surface: #111E35;
+    --card: #162540;
+    --border: #1E3A5F;
+    --gold: #F5A623;
+    --gold-dim: #C4841A;
+    --text: #F0EDE6;
+    --text-dim: #8FA3C0;
+    --text-muted: #4A6280;
+    --accent-blue: #2D6BE4;
+    --success: #2ECC71;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(10,22,40,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,166,35,0.08);
+  }
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 1.1rem;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--text-dim); font-size: 0.875rem; text-decoration: none;
+    font-weight: 500; letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 2.5rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; right: -20%; width: 70%; height: 100%;
+    background: radial-gradient(ellipse at 70% 30%, rgba(45,107,228,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.15em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700; line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    max-width: 900px;
+  }
+  .hero h1 em {
+    font-style: normal; color: var(--gold);
+  }
+  .hero-sub {
+    font-size: 1.125rem; color: var(--text-dim); max-width: 560px;
+    line-height: 1.7; margin-bottom: 2.5rem;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--gold); color: #0A1628;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 0.9rem;
+    padding: 0.75rem 1.75rem; border: none;
+    border-radius: 4px; cursor: pointer;
+    text-decoration: none; letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #FFB733; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500; font-size: 0.9rem;
+    padding: 0.75rem 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: 4px; cursor: pointer;
+    text-decoration: none; letter-spacing: 0.02em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── STAT TICKER ── */
+  .stats-ticker {
+    display: flex; gap: 0; margin-top: 5rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .stat-item {
+    flex: 1; padding: 1.5rem 2rem;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.5rem; font-weight: 700;
+    color: var(--gold); line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .stat-label {
+    font-size: 0.75rem; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 2.5rem; max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700; line-height: 1.1;
+    letter-spacing: -0.02em; color: var(--text);
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    color: var(--text-dim); font-size: 1rem;
+    max-width: 560px; line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; align-items: start;
+  }
+  .about-body p {
+    color: var(--text-dim); line-height: 1.8;
+    margin-bottom: 1.25rem; font-size: 0.975rem;
+  }
+  .about-body p strong { color: var(--text); font-weight: 500; }
+  .about-highlights {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .highlight-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 1.25rem 1.5rem; border-radius: 4px;
+  }
+  .highlight-card h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.875rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.4rem;
+    letter-spacing: 0.01em;
+  }
+  .highlight-card p {
+    font-size: 0.82rem; color: var(--text-dim); line-height: 1.6;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px; padding: 2rem;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--gold); transform: scaleX(0);
+    transform-origin: left; transition: transform 0.3s;
+  }
+  .project-card:hover { border-color: rgba(245,166,35,0.3); transform: translateY(-2px); }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-tag {
+    display: inline-block;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gold);
+    background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.2);
+    padding: 0.2rem 0.6rem; border-radius: 3px;
+    margin-bottom: 1rem;
+  }
+  .project-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.75rem;
+    line-height: 1.3; letter-spacing: -0.01em;
+  }
+  .project-card p {
+    font-size: 0.875rem; color: var(--text-dim);
+    line-height: 1.7; margin-bottom: 1.25rem;
+  }
+  .project-stack {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+  }
+  .stack-tag {
+    font-size: 0.7rem; font-weight: 500;
+    background: var(--surface); color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.5rem; border-radius: 3px;
+  }
+  .project-featured {
+    border-color: rgba(245,166,35,0.25);
+    background: linear-gradient(135deg, #162540 0%, #1A2D50 100%);
+    grid-column: span 2;
+  }
+  .project-featured .project-body {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;
+  }
+  .project-metrics {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .metric {
+    background: rgba(10,22,40,0.5); border: 1px solid var(--border);
+    border-radius: 4px; padding: 1rem;
+  }
+  .metric-val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem; font-weight: 700; color: var(--gold);
+    line-height: 1;
+  }
+  .metric-label { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+  /* ── EXPERIENCE TIMELINE ── */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 0.5rem; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .timeline-item { position: relative; margin-bottom: 2.5rem; }
+  .timeline-item::before {
+    content: '';
+    position: absolute; left: -2rem; top: 0.5rem;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--gold); border: 2px solid var(--bg);
+    box-shadow: 0 0 0 3px rgba(245,166,35,0.2);
+  }
+  .tl-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;
+  }
+  .tl-role {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 1rem; color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .tl-date {
+    font-size: 0.78rem; color: var(--text-muted);
+    font-weight: 500; white-space: nowrap;
+  }
+  .tl-company {
+    font-size: 0.875rem; color: var(--gold);
+    font-weight: 500; margin-bottom: 0.75rem;
+  }
+  .tl-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+  .tl-tag {
+    font-size: 0.68rem; font-weight: 500;
+    background: rgba(45,107,228,0.1); color: #6EA8FF;
+    border: 1px solid rgba(45,107,228,0.2);
+    padding: 0.15rem 0.5rem; border-radius: 3px;
+  }
+  .tl-bullets { list-style: none; }
+  .tl-bullets li {
+    font-size: 0.875rem; color: var(--text-dim);
+    line-height: 1.7; padding-left: 1rem; position: relative;
+    margin-bottom: 0.4rem;
+  }
+  .tl-bullets li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--text-muted); font-size: 0.75rem; top: 0.15rem;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .skill-group {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.5rem;
+  }
+  .skill-group h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.8rem; font-weight: 600;
+    color: var(--gold); text-transform: uppercase;
+    letter-spacing: 0.1em; margin-bottom: 1rem;
+  }
+  .skill-items { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-pill {
+    font-size: 0.8rem; font-weight: 500;
+    background: var(--surface); color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.75rem; border-radius: 20px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .skill-pill:hover { border-color: var(--gold); color: var(--text); }
+  .skill-pill.pro {
+    background: rgba(245,166,35,0.08);
+    border-color: rgba(245,166,35,0.25);
+    color: var(--gold);
+  }
+
+  /* ── CONTACT ── */
+  .contact-wrap {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 3rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .contact-wrap::before {
+    content: '';
+    position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(245,166,35,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .contact-wrap h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem; font-weight: 700; color: var(--text);
+    letter-spacing: -0.02em; margin-bottom: 0.75rem;
+  }
+  .contact-wrap p {
+    color: var(--text-dim); font-size: 0.975rem; margin-bottom: 2rem;
+    max-width: 440px; margin-left: auto; margin-right: auto;
+  }
+  .contact-links {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.875rem; color: var(--text-dim);
+    text-decoration: none; transition: color 0.2s;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border); border-radius: 4px;
+  }
+  .contact-link:hover { color: var(--gold); border-color: rgba(245,166,35,0.3); }
+  .contact-link svg { width: 16px; height: 16px; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2.5rem;
+    text-align: center;
+    font-size: 0.78rem; color: var(--text-muted);
+  }
+
+  /* ── DIVIDERS ── */
+  .full-divider {
+    border: none; border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    .hero { padding: 7rem 1.25rem 3rem; }
+    .stats-ticker { flex-direction: column; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+    section { padding: 4rem 1.25rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .project-featured { grid-column: span 1; }
+    .project-featured .project-body { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AA<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">Business Intelligence Analyst · Tema, Ghana</p>
+  <h1>Data that moves<br><em>Africa forward.</em></h1>
+  <p class="hero-sub">
+    I build the SQL pipelines, BI dashboards, and data models that operations and finance teams across five African countries rely on to make decisions that matter.
+  </p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn-primary">View my work</a>
+    <a href="#contact" class="btn-ghost">Get in touch</a>
+  </div>
+
+  <div class="stats-ticker">
+    <div class="stat-item">
+      <div class="stat-number" data-target="5" data-suffix="+">0</div>
+      <div class="stat-label">Years of analytics experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" data-target="5" data-suffix="">0</div>
+      <div class="stat-label">African countries — data managed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" data-target="4.88" data-prefix="GHS " data-suffix="M">0</div>
+      <div class="stat-label">Finance portfolio dashboarded</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" data-target="420" data-suffix="">0</div>
+      <div class="stat-label">Borrowers tracked in BI system</div>
+    </div>
+  </div>
+</div>
+
+<hr class="full-divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-eyebrow">About</p>
+  <h2 class="section-title">From lab bench<br>to data pipeline.</h2>
+  <div class="about-grid">
+    <div class="about-body">
+      <p>I am a Business Intelligence Analyst based in Tema, Ghana, with <strong>5+ years of experience</strong> designing and maintaining analytical infrastructure in regulated, multi-country environments. My career began in clinical laboratory science — where data integrity and audit-readiness are not optional — and evolved into full-stack BI development at Zipline Ghana, one of Africa's most technically ambitious logistics operations.</p>
+      <p>At Zipline, I served as <strong>Data Liaison, BI Developer, and Inventory Data Analyst</strong> simultaneously — building SQL pipelines in Snowflake and PostgreSQL, automated dashboards in Mode Analytics and Power BI, multi-source data models, and KPI scorecards used by directors across Ghana, Kenya, Nigeria, Rwanda, and Côte d'Ivoire.</p>
+      <p>I also build independently. My Bayport Ghana finance dashboard — a full-stack BI tool simulating a <strong>GHS 4.88M loan portfolio</strong> — demonstrates that I can design end-to-end analytical solutions for the financial sector, not just run queries someone else designed.</p>
+      <p>I am currently targeting <strong>Group Technology BI roles</strong> at pan-African financial institutions, and <strong>FMCG analytics roles</strong> at Nestlé, GBfoods, Unilever, and Guinness Ghana.</p>
+    </div>
+    <div class="about-highlights">
+      <div class="highlight-card">
+        <h4>Multi-country BI at scale</h4>
+        <p>Built and maintained production data infrastructure serving 5 African markets simultaneously — not a POC, a live system used by directors daily.</p>
+      </div>
+      <div class="highlight-card">
+        <h4>Financial analytics capability</h4>
+        <p>Independently designed a financial BI dashboard covering NPL ratios, arrears buckets, agent leaderboards, and disbursement trends. Ready for a banking BI team.</p>
+      </div>
+      <div class="highlight-card">
+        <h4>Regulated data environments</h4>
+        <p>FDA audit readiness, GDP compliance, and data governance across 5 regulated African markets. Data quality is not an afterthought in my work.</p>
+      </div>
+      <div class="highlight-card">
+        <h4>BSc Biochemistry + ALX Data Analytics</h4>
+        <p>University of Cape Coast (2016) · ALX Africa Data Analytics Certification (2025) · ALX Python Programming Certification (2025)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-eyebrow">Portfolio</p>
+  <h2 class="section-title">Work that shipped.</h2>
+  <p class="section-sub">Real analytical systems built in production environments — not academic exercises.</p>
+
+  <div class="projects-grid">
+
+    <!-- FEATURED -->
+    <div class="project-card project-featured">
+      <span class="project-tag">⭐ Featured · Finance BI</span>
+      <div class="project-body">
+        <div>
+          <h3>Collections & Finance BI Dashboard — Bayport Ghana Simulation</h3>
+          <p>Full-stack financial BI dashboard simulating a GHS 4.88M loan portfolio across 8 branches and 420 borrowers. Built as a deployable, licence-free solution using HTML and Chart.js. Covers the core reporting a bank's collections function needs: NPL ratios, collection efficiency, arrears aging, agent performance, and disbursement trends over 18 months.</p>
+          <p style="font-size:0.82rem; color: var(--gold); margin-bottom:0">Demonstrates ability to translate financial schedules into management-ready presentations — the core skill for financial industry BI roles.</p>
+          <div class="project-stack" style="margin-top:1rem">
+            <span class="stack-tag">HTML/CSS/JS</span>
+            <span class="stack-tag">Chart.js</span>
+            <span class="stack-tag">Financial Analytics</span>
+            <span class="stack-tag">KPI Design</span>
+            <span class="stack-tag">NPL Ratios</span>
+            <span class="stack-tag">Arrears Buckets</span>
+          </div>
+        </div>
+        <div class="project-metrics">
+          <div class="metric">
+            <div class="metric-val">GHS 4.88M</div>
+            <div class="metric-label">Simulated portfolio size</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val">8</div>
+            <div class="metric-label">Branches tracked</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val">420</div>
+            <div class="metric-label">Borrower profiles</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val">18mo</div>
+            <div class="metric-label">Disbursement trend analysis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPIRY RISK -->
+    <div class="project-card">
+      <span class="project-tag">Production · 5 Countries</span>
+      <h3>Africa-Wide Expiry Risk Monitoring System</h3>
+      <p>Designed and deployed an automated daily expiry monitoring data model tracking product lifecycle across Ghana, Kenya, Nigeria, Rwanda, and Côte d'Ivoire. System prevented patient safety incidents and reduced financial write-off exposure from stock wastage. Later scaled to become the standard monitoring tool across all African sites.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Snowflake</span>
+        <span class="stack-tag">PostgreSQL</span>
+        <span class="stack-tag">Mode Analytics</span>
+        <span class="stack-tag">FEFO Logic</span>
+        <span class="stack-tag">Alert Automation</span>
+      </div>
+    </div>
+
+    <!-- SUPPLIER SCORECARDS -->
+    <div class="project-card">
+      <span class="project-tag">Production · SQL Pipeline</span>
+      <h3>Multi-Quarter Supplier Performance Analytics</h3>
+      <p>Built multi-source SQL analytical pipelines combining delivery, stockout, off-nominal, and received data across multiple quarters. Output used directly by operations directors for supplier contract reviews and cost reduction decisions. Demonstrates the full BI cycle: requirements → data model → pipeline → decision.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Snowflake</span>
+        <span class="stack-tag">PostgreSQL</span>
+        <span class="stack-tag">Complex CTEs</span>
+        <span class="stack-tag">Window Functions</span>
+        <span class="stack-tag">KPI Scorecards</span>
+      </div>
+    </div>
+
+    <!-- WATER RESOURCE -->
+    <div class="project-card">
+      <span class="project-tag">Capstone · ALX Africa 2025</span>
+      <h3>Water Resource Optimisation & Agricultural Yield Analysis</h3>
+      <p>Collected and cleaned multi-source datasets on water availability and agricultural yield trends across regions. Applied EDA and data-driven modelling to propose optimised water allocation strategies. Delivered structured visual reporting for international development clients. Demonstrates cross-sector analytical thinking.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Pandas</span>
+        <span class="stack-tag">EDA</span>
+        <span class="stack-tag">Data Visualisation</span>
+        <span class="stack-tag">Policy Analytics</span>
+      </div>
+    </div>
+
+    <!-- INVENTORY DASHBOARD -->
+    <div class="project-card">
+      <span class="project-tag">Production · Power BI</span>
+      <h3>Multi-Site Quality & Inventory Dashboard</h3>
+      <p>Developed SQL-based dashboards monitoring product quality metrics, stock levels, expiry status, delivery performance, and off-nominal units across 5 regulated African facilities. Served as the primary BI tool for inventory and quality leadership at Zipline Ghana — replaced multiple manual reporting processes.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Power BI</span>
+        <span class="stack-tag">Mode Analytics</span>
+        <span class="stack-tag">SQL</span>
+        <span class="stack-tag">Inventory KPIs</span>
+        <span class="stack-tag">Quality Metrics</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-eyebrow">Experience</p>
+  <h2 class="section-title">Where I've built.</h2>
+  <p class="section-sub">Five years of applied BI work in a real production environment across five African countries.</p>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="tl-header">
+        <span class="tl-role">Business Intelligence Analyst & Operations Specialist</span>
+        <span class="tl-date">Aug 2021 – Feb 2026</span>
+      </div>
+      <div class="tl-company">Zipline Ghana — Regulated Healthcare Drone Logistics</div>
+      <div class="tl-tags">
+        <span class="tl-tag">Data Liaison</span>
+        <span class="tl-tag">Blood Inventory Manager</span>
+        <span class="tl-tag">Quartermaster</span>
+        <span class="tl-tag">GH-4 Compliance Team</span>
+        <span class="tl-tag">Fulfillment Safety Rep</span>
+      </div>
+      <ul class="tl-bullets">
+        <li>Built multi-source SQL pipelines in Snowflake and PostgreSQL for supply chain, quality, and financial reporting across 5 African markets</li>
+        <li>Designed automated dashboards and KPI scorecards in Mode Analytics and Power BI — primary decision tool for operations directors</li>
+        <li>Acted as Data Liaison: requirements intake from internal clients and directors → technical BI delivery</li>
+        <li>Deployed Africa-wide expiry monitoring data model; contributed to FDA audit readiness at GH-4 facility</li>
+        <li>Managed data governance across 5 regulated markets — audit-ready documentation, reconciliation protocols, access frameworks</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-header">
+        <span class="tl-role">Laboratory Scientist & Manager</span>
+        <span class="tl-date">Nov 2017 – Aug 2021</span>
+      </div>
+      <div class="tl-company">Healthwise Medical Centre, Tema</div>
+      <div class="tl-tags">
+        <span class="tl-tag">Data Quality</span>
+        <span class="tl-tag">Performance Reporting</span>
+        <span class="tl-tag">Team Leadership</span>
+      </div>
+      <ul class="tl-bullets">
+        <li>Prepared monthly and annual structured performance reports from laboratory information systems</li>
+        <li>Conducted QC data reviews to detect inconsistencies — foundational data integrity and anomaly detection experience</li>
+        <li>Supervised junior laboratory staff and managed cross-functional team deadlines</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-header">
+        <span class="tl-role">Laboratory Scientist</span>
+        <span class="tl-date">Jun 2016 – Aug 2017</span>
+      </div>
+      <div class="tl-company">Theresa's Clinic, Accra &nbsp;|&nbsp; International SOS — Newmont Ghana (Locum)</div>
+      <div class="tl-tags">
+        <span class="tl-tag">Clinical Data</span>
+        <span class="tl-tag">Regulatory Compliance</span>
+        <span class="tl-tag">Inventory Records</span>
+      </div>
+      <ul class="tl-bullets">
+        <li>Managed specimen data, statistical logging, and supply documentation within clinical software systems</li>
+        <li>Maintained compliance with confidentiality and reporting standards; performed preventive maintenance documentation</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-eyebrow">Skills</p>
+  <h2 class="section-title">The toolkit.</h2>
+  <p class="section-sub">Core technical proficiencies — tools I have used in production, not just tutorials.</p>
+
+  <div class="skills-grid">
+    <div class="skill-group">
+      <h4>SQL & Databases</h4>
+      <div class="skill-items">
+        <span class="skill-pill pro">Snowflake</span>
+        <span class="skill-pill pro">PostgreSQL</span>
+        <span class="skill-pill pro">Complex CTEs</span>
+        <span class="skill-pill pro">Window Functions</span>
+        <span class="skill-pill">MySQL</span>
+        <span class="skill-pill">Stored Procedures</span>
+        <span class="skill-pill">Data Profiling</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>BI & Visualisation</h4>
+      <div class="skill-items">
+        <span class="skill-pill pro">Power BI</span>
+        <span class="skill-pill pro">Mode Analytics</span>
+        <span class="skill-pill pro">Chart.js</span>
+        <span class="skill-pill">KPI Scorecards</span>
+        <span class="skill-pill">Dashboard Design</span>
+        <span class="skill-pill">ETL Support</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Python & Analysis</h4>
+      <div class="skill-items">
+        <span class="skill-pill pro">Pandas</span>
+        <span class="skill-pill pro">NumPy</span>
+        <span class="skill-pill pro">EDA</span>
+        <span class="skill-pill">Scripting & Automation</span>
+        <span class="skill-pill">Jupyter Notebooks</span>
+        <span class="skill-pill">Data Cleaning</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Excel & Finance</h4>
+      <div class="skill-items">
+        <span class="skill-pill pro">Advanced Excel</span>
+        <span class="skill-pill pro">PowerPivot</span>
+        <span class="skill-pill pro">Power Query</span>
+        <span class="skill-pill">Variance Analysis</span>
+        <span class="skill-pill">NPL Ratios</span>
+        <span class="skill-pill">Arrears Tracking</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Data Modelling & Governance</h4>
+      <div class="skill-items">
+        <span class="skill-pill pro">Star Schema</span>
+        <span class="skill-pill pro">Multi-source Models</span>
+        <span class="skill-pill">ETL Pipeline Design</span>
+        <span class="skill-pill">Audit Documentation</span>
+        <span class="skill-pill">Reconciliation</span>
+        <span class="skill-pill">GDP / FDA Compliance</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Systems & Tools</h4>
+      <div class="skill-items">
+        <span class="skill-pill pro">Odoo</span>
+        <span class="skill-pill">SAP (foundational)</span>
+        <span class="skill-pill">Google Suite</span>
+        <span class="skill-pill">GitHub (basic)</span>
+        <span class="skill-pill">Microsoft 365</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap">
+    <h2>Let's work together.</h2>
+    <p>Open to Business Intelligence, Data Analyst, and Operations Analytics roles across Ghana and Africa. Available immediately.</p>
+    <div class="contact-links">
+      <a href="mailto:abrahamabredu@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        abrahamabredu@gmail.com
+      </a>
+      <a href="tel:+233543254444" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+        +233 543 254 444
+      </a>
+      <a href="https://linkedin.com/in/abrahamabredu" class="contact-link" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+    </div>
+    <a href="mailto:abrahamabredu@gmail.com" class="btn-primary">Send me a message →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Abraham Abredu · Business Intelligence Analyst · Tema, Ghana · abrahamabredu@gmail.com</p>
+</footer>
+
+<script>
+// Stat counter animation
+function animateCounter(el) {
+  const target = parseFloat(el.dataset.target);
+  const prefix = el.dataset.prefix || '';
+  const suffix = el.dataset.suffix || '';
+  const isDecimal = target % 1 !== 0;
+  const duration = 1800;
+  const start = performance.now();
+
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const current = target * ease;
+    el.textContent = prefix + (isDecimal ? current.toFixed(2) : Math.round(current)) + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter(entry.target);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.stat-number[data-target]').forEach(el => observer.observe(el));
+
+// Active nav link on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 200) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+  });
+});
+</script>
+
+</body>
+</html>
